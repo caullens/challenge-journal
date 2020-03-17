@@ -1,9 +1,9 @@
 import React from 'react';
-import {MuiThemeProvider} from "@material-ui/core";
+import { MuiThemeProvider } from '@material-ui/core';
 
-import Challenges from "./components/challenges";
-import Header from "./components/header";
-import theme from "./trainTheme";
+import Challenges from './components/challenges';
+import Header from './components/header';
+import theme from './trainTheme';
 
 function App() {
   return (
