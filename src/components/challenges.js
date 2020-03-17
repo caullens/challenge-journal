@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,83 +24,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const challenges = [
-  {
-    id: 0,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 1,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 2,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 3,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 4,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 5,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 6,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-  {
-    id: 7,
-    imageSource: 'https://i.ytimg.com/vi/MEdpRYyjz_0/mqdefault.jpg',
-    title: 'Peeking Inside Pi',
-    date: '14 March 2020',
-    description: '🥧 Happy Pi Day 2020! In this challenge, I build a simple web application using p5.js and node.js to search in the first billion digits of Pi.',
-    videoLink: 'https://www.youtube.com/watch?v=MEdpRYyjz_0',
-    githubLink: 'https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_156_Pi_Digits/p5-multi',
-  },
-];
-
 function Challenges() {
   const classes = useStyles();
+  const [challenges, setChallenges] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/codingChallenges')
+      .then((response) => response.json())
+      .then(({ content }) => setChallenges(content));
+  }, []);
 
   return (
     <div className={classes.container}>
@@ -115,8 +47,8 @@ function Challenges() {
           </Typography>
         </span>
       </div>
-      <Grid className={classes.challengesContainer} container justifyContent="center" spacing={4}>
-        {challenges.map((challenge) => (
+      <Grid className={classes.challengesContainer} container spacing={4}>
+        {Array.isArray(challenges) && challenges.map((challenge) => (
           <Grid key={challenge.id} item xl={2} lg={3} md={4} sm={6} xs={12}>
             <Challenge challenge={challenge} />
           </Grid>

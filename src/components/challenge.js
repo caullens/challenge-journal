@@ -30,7 +30,7 @@ function Challenge({ challenge }) {
 
 Challenge.propTypes = {
   challenge: PropTypes.exact({
-    id: PropTypes.number,
+    id: PropTypes.string,
     imageSource: PropTypes.string,
     title: PropTypes.string,
     date: PropTypes.string,
